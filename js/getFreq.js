@@ -1,30 +1,30 @@
 var pitch, tone, str;
 
-var data = [];
+var s = [];
 
 //function to get pitch
 function initPitch(){
     // initialize pitch detector
-    pitch = new PitchAnalyzer(SAMPLE_SIZE);
+    pitch = new PitchAnalyzer();
     
     str = new Uint8Array(fft.frequencyBinCount);
     
     //mediaStreamSource.connect(analyzer);
     
-    checkPitch();    
+    setInterval(checkPitch, 300);    
 }
 
 //function loop to keep checking pitch
 function checkPitch(){
-    requestAnimationFrame(checkPitch);
+    //requestAnimationFrame(checkPitch);
     
     // try to get samples
-    fft.getByteFrequencyData(str);
+    //fft.getByteFrequencyData(str);
     
-    data = [];
+    s = [];
     
-    for(var i=0; i<str.length; i++){
-        data.push(str[i]);
+    for(var i=0; i<data.length; i++){
+        s.push(str[i]);
     }
     
     // copy samples to the internal buffer
@@ -35,7 +35,7 @@ function checkPitch(){
     
     tone = pitch.findTone();
     peak = pitch.getPeak();
-    console.log(peak);
+    //console.log(peak);
     
     if(tone === null || tone === 0){
         console.log('no tone found!');

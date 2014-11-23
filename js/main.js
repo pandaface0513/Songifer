@@ -46,6 +46,7 @@ window.onload = function(){
     }
 }
 
+
 //connect the microphone
 function gotStream(stream){
     mediaStreamSource = context.createMediaStreamSource(stream);
