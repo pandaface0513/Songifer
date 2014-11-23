@@ -64,7 +64,7 @@ var HelloWorld = function(){
     this.AmpifyRatio = 1;
     this.Secret = true;
     this.record = function(){
-
+        
     }
 }    //start our recording
 
