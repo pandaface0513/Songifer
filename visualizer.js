@@ -10,7 +10,7 @@ var SAMPLE_SIZE = 256;
 var CANVAS_WIDTH = 800;
 var CANVAS_HEIGHT = 600;
 
-var BAR_WIDTH = CANVAS_WIDTH / (SAMPLE_SIZE/3);
+var BAR_WIDTH = CANVAS_WIDTH / (SAMPLE_SIZE/2);
 
 // This data object will get populated with harmonics.
 var data = new Uint8Array(SAMPLE_SIZE);
