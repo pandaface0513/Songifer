@@ -3,9 +3,6 @@ html {
 }
 
 body {
-    background: -webkit-radial-gradient(transparent 10%, rgba(21, 33, 100, 0.5));
-    background: -moz-radial-gradient(transparent 10%, rgba(21, 33, 100, 0.5));
-    background: -o-radial-gradient(transparent 10%, rgba(21, 33, 100, 0.5));
-    background-color: #456700;
+    background-color: #000000;
     margin: 40px auto;
 }
