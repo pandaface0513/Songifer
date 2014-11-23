@@ -10,7 +10,7 @@ var SAMPLE_SIZE = 256;
 var CANVAS_WIDTH = 800;
 var CANVAS_HEIGHT = 600;
 
-var BAR_WIDTH = CANVAS_WIDTH / (SAMPLE_SIZE/2);
+var BAR_WIDTH = CANVAS_WIDTH / (SAMPLE_SIZE/3);
 
 // This data object will get populated with harmonics.
 var data = new Uint8Array(SAMPLE_SIZE);
@@ -64,7 +64,7 @@ function animate() {
   requestAnimationFrame(animate);
 
   // Clear the screen.
-  canvasContext.fillStyle = 'rgb(0, 255, 0)';
+  canvasContext.fillStyle = 'rgba(0, 0, 0, 0.1)';
   canvasContext.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
   // The harmonics data is in a logarithmic scale.
