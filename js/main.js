@@ -51,9 +51,9 @@ function gotStream(stream){
     mediaStreamSource = context.createMediaStreamSource(stream);
     
     //connect it to the destination.
-    mediaStreamSource.connect(context.destination);
-
+    //mediaStreamSource.connect(context.destination);
     startVisualizer();  // after we get the mic stream, start the visualizer 
+        initPitch();
 }
 
 var HelloWorld = function(){
