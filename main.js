@@ -1,6 +1,8 @@
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-var context, s;
+context = new AudioContext();
+
+var context, mediaStreamSource;
 
 window.onload = function(){
     var text = new HelloWorld();
@@ -14,7 +16,6 @@ window.onload = function(){
     GUI.add(text, 'record');
     
     //initialize audioContext
-    context = new AudioContext();
         
     navigator.getUserMedia = ( navigator.getUserMedia ||
                        navigator.webkitGetUserMedia ||
@@ -51,6 +52,8 @@ function gotStream(stream){
     
     //connect it to the destination.
     mediaStreamSource.connect(context.destination);
+
+    startVisualizer();  // after we get the mic stream, start the visualizer 
 }
 
 var HelloWorld = function(){
