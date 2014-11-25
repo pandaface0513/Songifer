@@ -4,6 +4,12 @@ context = new AudioContext();
 
 var context, mediaStreamSource;
 
+var isRecording = false;
+var timeRemaining = 0;
+var recordTime = 10000;
+
+var raw_data = [];
+
 window.onload = function(){
     var text = new HelloWorld();
     var GUI = new dat.GUI();
@@ -54,7 +60,7 @@ function gotStream(stream){
     //connect it to the destination.
     //mediaStreamSource.connect(context.destination);
     startVisualizer();  // after we get the mic stream, start the visualizer 
-        initPitch();
+    initPitch();
 }
 
 var HelloWorld = function(){
@@ -65,14 +71,22 @@ var HelloWorld = function(){
     this.AmpifyRatio = 1;
     this.Secret = true;
     this.record = function(){
-        
+        //start our recording
+        if(!isRecording){   //if not recording
+            isRecording = true;
+            timeRemaining = recordTime / 1000;
+            startRecording();
+            setTimeout(stopRecording, recordTime+1000);
+        }
     }
-}    //start our recording
+}
 
+//function for displaying status
+function updateStatus(status){
+    document.getElementById("status").innerHTML = status;
+}
 
-
-
-
+/*
 function getNote(frequency, reference) {
     if (!frequency) return null;
     reference = reference || 440;
@@ -86,4 +100,5 @@ function getAngle(midiNote) {
 function getOctave (midiNote) {
     return ~~(midiNote / 12);
 }
+*/
 
