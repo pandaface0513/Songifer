@@ -40,10 +40,8 @@ function stopRecording(){
     timeRemaining = 0;
     //stop the record loop
     clearInterval(recordThread);
-    //print out the raw_data
-    console.log(raw_data.toString());
-    //send the raw_data to convertNote
-    //convertNote(raw_data);
+    //post recording
+    postRecording();
 }
 
 //function loop to keep detecting and recording frequency

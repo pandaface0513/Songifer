@@ -86,6 +86,16 @@ function updateStatus(status){
     document.getElementById("status").innerHTML = status;
 }
 
+//function for after getting the recording
+function postRecording(){
+    //step one - group the data
+    group_data = grouping(raw_data);
+    //step two - convert to notes
+    //note_data = convertNote(group_data);
+    //step three - create music sheet
+    //step four - play music
+}
+
 /*
 function getNote(frequency, reference) {
     if (!frequency) return null;
