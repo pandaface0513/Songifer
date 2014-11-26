@@ -27,9 +27,16 @@ var LOWER_FREQ_BOUNDS = 27;
 var UPPER_FREQ_BOUNDS = 4186;
 
 function convertNote(noteArray) {
+	updateStatus("Converting Notes...");
+
+	var convertedNoteData = [];
+
 	for (var i = 0, len = noteArray.length; i < len; i++) {
-		mapValues(noteArray[i]);
+		convertedNoteData.push(mapValues(noteArray[i]));
 	}
+
+	console.log(convertedNoteData);
+	return convertedNoteData;
 	
 }
 
@@ -52,18 +59,18 @@ function mapValues(inputValue) {
 	while (i < (mappingArray.length - 1) && continueLoop == true) {
 
 		if (inputValue <= LOWER_FREQ_BOUNDS) {
-			console.log("input value " + inputValue + " is less than min");
+			// console.log("input value " + inputValue + " is less than min");
 			keyNumber = 0;
 			continueLoop = false;
 		}
 		else if (inputValue > UPPER_FREQ_BOUNDS) {
-			console.log("input value " + inputValue + " is more than max");
+			// console.log("input value " + inputValue + " is more than max");
 			keyNumber = 64;
 			continueLoop = false;
 		}
 		else {
 			if (inputValue >= mappingArray[i].freq && inputValue < mappingArray[i+1].freq) {
-				console.log("input value " + inputValue + " mapped to note " + mappingArray[i].note);
+				// console.log("input value " + inputValue + " mapped to note " + mappingArray[i].note);
 				keyNumber = mappingArray[i].note;
 				continueLoop = false;
 			}
