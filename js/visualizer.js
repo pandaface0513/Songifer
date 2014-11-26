@@ -98,6 +98,6 @@ function startVisualizer() {
 
   mediaStreamSource.connect(fft);
 
-  fft.connect(context.destination);
+  //fft.connect(context.destination);
   animate();
 }

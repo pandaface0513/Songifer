@@ -6,7 +6,7 @@ var context, mediaStreamSource;
 
 var isRecording = false;
 var timeRemaining = 0;
-var recordTime = 10000;
+var recordTime = 30000;
 
 var raw_data = [];
 
@@ -14,11 +14,11 @@ window.onload = function(){
     var text = new HelloWorld();
     var GUI = new dat.GUI();
     GUI.add(text, 'title')
-    GUI.add(text, 'NoiseCancel')
-    GUI.add(text, 'NoiseSensitivity', 1, 10);
-    GUI.add(text, 'Amplifier');
-    GUI.add(text, 'AmpifyRatio', 0.1, 3);
-    GUI.add(text, "Secret");
+    //GUI.add(text, 'NoiseCancel')
+    //GUI.add(text, 'NoiseSensitivity', 1, 10);
+    //GUI.add(text, 'Amplifier');
+    //GUI.add(text, 'AmpifyRatio', 0.1, 3);
+    //GUI.add(text, "Secret");
     GUI.add(text, 'record');
     
     //initialize audioContext
@@ -61,6 +61,7 @@ function gotStream(stream){
     //mediaStreamSource.connect(context.destination);
     startVisualizer();  // after we get the mic stream, start the visualizer 
     initPitch();
+    initOscillator();
 }
 
 var HelloWorld = function(){
@@ -96,6 +97,9 @@ function postRecording(){
     group_note = groupingAgain(note_data);
     //step four - create music sheet
     //step five - play music
+    
+    //hidden step - play frequency
+    playFreq(raw_data);
 }
 
 /*
