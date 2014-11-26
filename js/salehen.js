@@ -53,7 +53,7 @@
         return {
           start: note.start,
           end: note.end,
-          tone: getSemitoneFromNote(note.tone),
+          tone: note.tone,
         };
       }
 
@@ -91,7 +91,7 @@
           retval[i] = {
             start: note.start + timeOffset,
             end: note.end + timeOffset,
-            tone: getSemitoneFromNote(note.tone),
+            tone: note.tone,
             totalPlayed: note.totalPlayed
           };
         }

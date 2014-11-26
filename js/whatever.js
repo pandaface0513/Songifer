@@ -1,62 +1,28 @@
 var notesLead = [
-  {measure: 0, start: 0/16, duration: 1/16, tone: 'G4'},
-  {measure: 0, start: 0/16, duration: 1/16, tone: 'G4'},
-  {measure: 0, start: 0/16, duration: 1/16, tone: 'G4'},
-  {measure: 0, start: 0/16, duration: 1/16, tone: 'G4'},
+    /*
+  {measure: 1, start: 0/16, duration: 1/16, tone: 64},
+  {measure: 1, start: 0/16, duration: 1/16, tone: 64},
+  {measure: 1, start: 0/16, duration: 1/16, tone: 64},
+  {measure: 1, start: 0/16, duration: 1/16, tone: 64},
 
-  {measure: 0, start: 2/16, duration: 1/16, tone: 'G4'},
-  {measure: 0, start: 2/16, duration: 1/16, tone: 'G4'},
-  {measure: 0, start: 2/16, duration: 1/16, tone: 'G4'},
-  {measure: 0, start: 2/16, duration: 1/16, tone: 'G4'},
+  {measure: 1, start: 2/16, duration: 1/16, tone: 64},
+  {measure: 1, start: 2/16, duration: 1/16, tone: 64},
+  {measure: 1, start: 2/16, duration: 1/16, tone: 64},
+  {measure: 1, start: 2/16, duration: 1/16, tone: 64},
 
-  {measure: 0, start: 4/16, duration: 1/16, tone: 'G4'},
-  {measure: 0, start: 4/16, duration: 1/16, tone: 'Bb4'},
-  {measure: 0, start: 4/16, duration: 1/16, tone: 'D5'},
-  {measure: 0, start: 4/16, duration: 1/16, tone: 'F5'},
+  {measure: 1, start: 4/16, duration: 1/16, tone: 64},
+  {measure: 1, start: 4/16, duration: 1/16, tone: 60},
+  {measure: 1, start: 4/16, duration: 1/16, tone: 12},
+  {measure: 1, start: 4/16, duration: 1/16, tone: 30},
 
-  {measure: 0, start: 7/16, duration: 5/16, tone: 'G4'},
-  {measure: 0, start: 7/16, duration: 1/16, tone: 'Bb4'},
-  {measure: 0, start: 7/16, duration: 1/16, tone: 'D5'},
-  {measure: 0, start: 7/16, duration: 1/16, tone: 'F5'},
-
-  {measure: 1, start: 0/16, duration: 1/16, tone: 'D4'},
-  {measure: 1, start: 0/16, duration: 3/16, tone: 'D4'},
-  {measure: 1, start: 0/16, duration: 1/16, tone: 'A4'},
-  {measure: 1, start: 0/16, duration: 1/16, tone: 'C5'},
-
-  {measure: 1, start: 2/16, duration: 1/16, tone: 'D4'},
-  {measure: 1, start: 2/16, duration: 1/16, tone: 'F4'},
-  {measure: 1, start: 2/16, duration: 1/16, tone: 'D4'},
-  {measure: 1, start: 2/16, duration: 2/16, tone: 'C5'},
-
-  {measure: 1, start: 4/16, duration: 1/16, tone: 'D4'},
-  {measure: 1, start: 4/16, duration: 1/16, tone: 'F4'},
-  {measure: 1, start: 4/16, duration: 1/16, tone: 'A4'},
-  {measure: 1, start: 4/16, duration: 1/16, tone: 'C5'},
-
-  {measure: 1, start: 7/16, duration: 1/16, tone: 'Bb4'},
-  {measure: 1, start: 7/16, duration: 1/16, tone: 'Db5'},
-  {measure: 1, start: 7/16, duration: 1/16, tone: 'F5'},
-  {measure: 1, start: 7/16,  duration: 1/16, tone: 'Ab5'},
-
-  {measure: 1, start: 10/16, duration: 1/16, tone: 'F4'},
-  {measure: 1, start: 10/16, duration: 1/16, tone: 'Ab4'},
-  {measure: 1, start: 10/16, duration: 1/16, tone: 'C5'},
-  {measure: 1, start: 10/16, duration: 1/16, tone: 'Eb5'},
-    
-  {measure: 0, start: 0/16, duration: 1/16, tone: 'F4'},
-  {measure: 0, start: 0/16, duration: 1/16, tone: 'Ab4'},
-  {measure: 0, start: 0/16, duration: 1/16, tone: 'C5'},
-  {measure: 0, start: 0/16, duration: 1/16, tone: 'Eb5'},
-
-  {measure: 0, start: 2/16, duration: 1/16, tone: 'F4'},
-  {measure: 0, start: 2/16, duration: 1/16, tone: 'Ab4'},
-  {measure: 0, start: 2/16, duration: 1/16, tone: 'C5'},
-  {measure: 0, start: 2/16, duration: 1/16, tone: 'Eb5'}
+  {measure: 1, start: 7/16, duration: 1/16, tone: 64},
+  {measure: 1, start: 7/16, duration: 1/16, tone: 60},
+  {measure: 1, start: 7/16, duration: 1/16, tone: 12},
+  {measure: 0, start: 7/16, duration: 1/16, tone: 30}*/
 ];
 
 var gain = context.createGain();
-gain.gain.value = 20;
+gain.gain.value = 10;
 
 var lead = synthastico.createSynth(context, notesLead);
 
