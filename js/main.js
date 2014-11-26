@@ -97,9 +97,6 @@ function postRecording(){
     group_note = groupingAgain(note_data);
     //step four - create music sheet
     //step five - play music
-    
-    //hidden step - play frequency
-    playFreq(raw_data);
 }
 
 /*
