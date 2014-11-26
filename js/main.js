@@ -6,7 +6,7 @@ var context, mediaStreamSource;
 
 var isRecording = false;
 var timeRemaining = 0;
-var recordTime = 10000;
+var recordTime = 30000;
 
 var raw_data = [];
 
@@ -93,8 +93,10 @@ function postRecording(){
     group_data = grouping(raw_data);
     //step two - convert to notes
     //note_data = convertNote(group_data);
-    //step three - create music sheet
-    //step four - play music
+    //step three - regroup the notes
+    //group_note = groupingAgain(note_data);
+    //step four - create music sheet
+    //step five - play music
 }
 
 /*
