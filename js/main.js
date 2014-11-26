@@ -89,7 +89,7 @@ function updateStatus(status){
 //function for after getting the recording
 function postRecording(){
     //step one - group the data
-    //group_data = grouping(raw_data);
+    group_data = grouping(raw_data);
     //step two - convert to notes
     //note_data = convertNote(group_data);
     //step three - create music sheet
