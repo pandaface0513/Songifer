@@ -29,14 +29,13 @@ function grouping(raw){
     return group_data;
 }
 
-
 function groupingAgain(notes){
     //update the status
     updateStatus("Organizing Notes...");
     //set up empty variables
     var group_note = [];    //empty array
     var note = 0;
-    var length = 0;
+    var length = 1;
     //loop the array
     for(var i=0; i<notes.length; i++){
         //check if stored note matches with the notes
@@ -53,7 +52,7 @@ function groupingAgain(notes){
             group_note.push(o);
             //reset the new note and length
             note = notes[i].note;
-            length = 0;
+            length = 1;
         }
     }
     return group_note;

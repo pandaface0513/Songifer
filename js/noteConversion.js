@@ -32,7 +32,11 @@ function convertNote(noteArray) {
 	var convertedNoteData = [];
 
 	for (var i = 0, len = noteArray.length; i < len; i++) {
-		convertedNoteData.push(mapValues(noteArray[i]));
+		var note = mapValues(noteArray[i].freq);
+        var o = new Object();
+        o.note = note;
+        o.length = noteArray[i].length;
+        convertedNoteData.push(o);
 	}
 
 	console.log(convertedNoteData);
