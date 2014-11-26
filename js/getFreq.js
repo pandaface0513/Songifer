@@ -38,10 +38,10 @@ function checkPitch(){
     //console.log(peak);
     
     if(tone === null || tone === 0){
-        console.log('no tone found!');
+        // console.log('no tone found!');
         document.getElementById("freq").innerHTML = "silent";
     }else{
-        console.log('found a tone, frequency:', tone.freq, 'volume:', tone.db);
+        // console.log('found a tone, frequency:', tone.freq, 'volume:', tone.db);
         document.getElementById("freq").innerHTML = tone.freq;
     }
 }

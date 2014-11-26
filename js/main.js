@@ -65,7 +65,7 @@ var HelloWorld = function(){
     this.AmpifyRatio = 1;
     this.Secret = true;
     this.record = function(){
-        
+        convertNote([200, 300, 400, 500]);
     }
 }    //start our recording
 
