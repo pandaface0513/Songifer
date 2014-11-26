@@ -1,26 +1,51 @@
 var pitch, tone, str;
 
+var recordThread, countThread;
+
 var s = [];
 
 //function to get pitch
 function initPitch(){
     // initialize pitch detector
-    pitch = new PitchAnalyzer();
-    
+    pitch = new PitchAnalyzer();   
     str = new Uint8Array(fft.frequencyBinCount);
-    
-    //mediaStreamSource.connect(analyzer);
-    
-    setInterval(checkPitch, 300);    
 }
 
-//function loop to keep checking pitch
-function checkPitch(){
-    //requestAnimationFrame(checkPitch);
-    
-    // try to get samples
-    //fft.getByteFrequencyData(str);
-    
+//function to start recording
+function startRecording(){
+    //update status
+    updateStatus("Recording...");
+    //empty the raw-data
+    raw_data = [];
+    //start the record and countdown threads
+    recordThread = setInterval(recordFreq, 300);
+    countThread = setInterval(countDown, 1000);
+}
+
+//function to update time for user
+function countDown(){
+    timeRemaining--;
+    document.getElementById("time").innerHTML = 
+        timeRemaining + " seconds left.";
+}
+
+//function to stop recording
+function stopRecording(){
+    //switch record back on
+    isRecording = false;
+    //update status
+    updateStatus("Done Recording!");
+    //stop the countdown loop
+    clearInterval(countThread);
+    timeRemaining = 0;
+    //stop the record loop
+    clearInterval(recordThread);
+    //post recording
+    postRecording();
+}
+
+//function loop to keep detecting and recording frequency
+function recordFreq(){
     s = [];
     
     for(var i=0; i<data.length; i++){
@@ -34,14 +59,13 @@ function checkPitch(){
     pitch.process();
     
     tone = pitch.findTone();
-    peak = pitch.getPeak();
-    //console.log(peak);
     
     if(tone === null || tone === 0){
-        // console.log('no tone found!');
+        raw_data.push(0);
         document.getElementById("freq").innerHTML = "silent";
     }else{
-        // console.log('found a tone, frequency:', tone.freq, 'volume:', tone.db);
-        document.getElementById("freq").innerHTML = tone.freq;
+        freak = Math.floor(tone.freq);
+        raw_data.push(freak);
+        document.getElementById("freq").innerHTML = freak;
     }
 }

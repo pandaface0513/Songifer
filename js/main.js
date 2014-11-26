@@ -4,6 +4,12 @@ context = new AudioContext();
 
 var context, mediaStreamSource;
 
+var isRecording = false;
+var timeRemaining = 0;
+var recordTime = 10000;
+
+var raw_data = [];
+
 window.onload = function(){
     var text = new HelloWorld();
     var GUI = new dat.GUI();
@@ -54,7 +60,7 @@ function gotStream(stream){
     //connect it to the destination.
     //mediaStreamSource.connect(context.destination);
     startVisualizer();  // after we get the mic stream, start the visualizer 
-        initPitch();
+    initPitch();
 }
 
 var HelloWorld = function(){
@@ -66,13 +72,32 @@ var HelloWorld = function(){
     this.Secret = true;
     this.record = function(){
         convertNote([200, 300, 400, 500]);
+        //start our recording
+        if(!isRecording){   //if not recording
+            isRecording = true;
+            timeRemaining = recordTime / 1000;
+            startRecording();
+            setTimeout(stopRecording, recordTime+1000);
+        }
     }
-}    //start our recording
+}
 
+//function for displaying status
+function updateStatus(status){
+    document.getElementById("status").innerHTML = status;
+}
 
+//function for after getting the recording
+function postRecording(){
+    //step one - group the data
+    //group_data = grouping(raw_data);
+    //step two - convert to notes
+    //note_data = convertNote(group_data);
+    //step three - create music sheet
+    //step four - play music
+}
 
-
-
+/*
 function getNote(frequency, reference) {
     if (!frequency) return null;
     reference = reference || 440;
@@ -86,4 +111,5 @@ function getAngle(midiNote) {
 function getOctave (midiNote) {
     return ~~(midiNote / 12);
 }
+*/
 
