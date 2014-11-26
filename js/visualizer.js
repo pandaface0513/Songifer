@@ -5,7 +5,7 @@ var req = new XMLHttpRequest();
 
 var fft;
 
-var SAMPLE_SIZE = 1024;
+var SAMPLE_SIZE = 512;
 
 var CANVAS_WIDTH = 800;
 var CANVAS_HEIGHT = 600;

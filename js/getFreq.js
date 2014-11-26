@@ -18,7 +18,7 @@ function startRecording(){
     //empty the raw-data
     raw_data = [];
     //start the record and countdown threads
-    recordThread = setInterval(recordFreq, 200);
+    recordThread = setInterval(recordFreq, 100);
     countThread = setInterval(countDown, 1000);
 }
 

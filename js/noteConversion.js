@@ -44,6 +44,23 @@ function convertNote(noteArray) {
 	
 }
 
+function convertNoteA(noteArray) {
+	updateStatus("Converting Notes...");
+
+	var convertedNoteData = [];
+
+	for (var i = 0, len = noteArray.length; i < len; i++) {
+		var note = mapValues(noteArray[i]);
+        var o = new Object();
+        o.note = note;
+        convertedNoteData.push(o);
+	}
+
+	console.log(convertedNoteData);
+	return convertedNoteData;
+	
+}
+
 /**
  * Takes in a frequency value. Convert to the piano key value.
  */

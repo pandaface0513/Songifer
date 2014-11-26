@@ -2,7 +2,7 @@
   var BASE_FREQUENCY = 440;
   var OCTAVE_LENGTH = 12;
   var SAMPLERATE = 44100;
-  var BUFFER_SIZE = 1024;
+  var BUFFER_SIZE = 2048;
   var TEMPO = 100;
   var BASE_OCTAVE = 4;
 

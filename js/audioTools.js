@@ -1,37 +1,37 @@
-var notesLead = [
-    /*
-  {measure: 1, start: 0/16, duration: 1/16, tone: 64},
-  {measure: 1, start: 0/16, duration: 1/16, tone: 64},
-  {measure: 1, start: 0/16, duration: 1/16, tone: 64},
-  {measure: 1, start: 0/16, duration: 1/16, tone: 64},
+function dynamicMusic(notes){
+    //update status
+    updateStatus("Writing Music Sheet...");
+    //create empty array to store music sheet
+    var musicSheet = [];
+    var measure = 0;
+    var start = 1;
+    var num = 0;
+    //runs a loop to read from notes
+    for(var i=0; i<notes.length; i++){
+        //grabbing the values
+        var note = notes[i].note;
+        //var len = notes[i].length;
+        //setting the structure
+        o = new Object();
+        o.measure = measure;
+        o.start = start/16;
+        o.duration = 1/16;
+        o.tone = note;
+        //insert into the music sheet
+        musicSheet.push(o);
+        start++;
+        if(start > 16){start = 1;}
+    }
+    
+    return musicSheet;
+}
 
-  {measure: 1, start: 2/16, duration: 1/16, tone: 64},
-  {measure: 1, start: 2/16, duration: 1/16, tone: 64},
-  {measure: 1, start: 2/16, duration: 1/16, tone: 64},
-  {measure: 1, start: 2/16, duration: 1/16, tone: 64},
-
-  {measure: 1, start: 4/16, duration: 1/16, tone: 64},
-  {measure: 1, start: 4/16, duration: 1/16, tone: 60},
-  {measure: 1, start: 4/16, duration: 1/16, tone: 12},
-  {measure: 1, start: 4/16, duration: 1/16, tone: 30},
-
-  {measure: 1, start: 7/16, duration: 1/16, tone: 64},
-  {measure: 1, start: 7/16, duration: 1/16, tone: 60},
-  {measure: 1, start: 7/16, duration: 1/16, tone: 12},
-  {measure: 0, start: 7/16, duration: 1/16, tone: 30}*/
-];
-
-var gain = context.createGain();
-gain.gain.value = 10;
-
-var lead = synthastico.createSynth(context, notesLead);
-
-setTimeout(function () {
+function playMusic(lead, gain){
   //var bass = synthastico.createSynth(audioContext, notesBass);
 
-  lead.decay = 5*(synthastico.SAMPLERATE / 1000);
+  lead.decay = 30*(synthastico.SAMPLERATE / 1000);
   lead.sustain = 0.5;
-  lead.release = 5*(synthastico.SAMPLERATE / 1000);
+  lead.release = 30*(synthastico.SAMPLERATE / 1000);
 
   lead.sound = function (note, time) {
     // Create a "period" based on the note's semitone.
@@ -74,4 +74,4 @@ setTimeout(function () {
   // lead.connect(audioContext.destination);
   lowpass.connect(gain);
   gain.connect(context.destination);
-}, 1000);
+}

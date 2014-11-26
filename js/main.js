@@ -2,11 +2,11 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 context = new AudioContext();
 
-var context, mediaStreamSource;
+var context, mediaStreamSource, musicPlayer;
 
 var isRecording = false;
 var timeRemaining = 0;
-var recordTime = 30000;
+var recordTime = 10000;
 
 var raw_data = [];
 
@@ -92,11 +92,20 @@ function postRecording(){
     //step one - group the data
     group_data = grouping(raw_data);
     //step two - convert to notes
-    note_data = convertNote(group_data);
+    note_data = convertNoteA(raw_data);
     //step three - regrouping the notes
     group_note = groupingAgain(note_data);
     //step four - create music sheet
+    notesLead = [];
+    notesLead = dynamicMusic(note_data);
+    console.log(notesLead);
     //step five - play music
+    var gain = context.createGain();
+    gain.gain.value = 10;
+    var lead = synthastico.createSynth(context, notesLead);
+    //update status
+    updateStatus("Playing some creepy music...");
+    playMusic(lead, gain);
 }
 
 /*
