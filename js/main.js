@@ -92,12 +92,13 @@ function postRecording(){
     //step one - group the data
     group_data = grouping(raw_data);
     //step two - convert to notes
-    note_data = convertNoteA(raw_data);
+    note_data = convertNote(group_data);
     //step three - regrouping the notes
     group_note = groupingAgain(note_data);
+    console.log(group_note);
     //step four - create music sheet
     notesLead = [];
-    notesLead = dynamicMusic(note_data);
+    notesLead = dynamicMusic(group_note);
     console.log(notesLead);
     //step five - play music
     var gain = context.createGain();

@@ -39,7 +39,7 @@ function convertNote(noteArray) {
         convertedNoteData.push(o);
 	}
 
-	console.log(convertedNoteData);
+	//console.log(convertedNoteData);
 	return convertedNoteData;
 	
 }
@@ -56,7 +56,7 @@ function convertNoteA(noteArray) {
         convertedNoteData.push(o);
 	}
 
-	console.log(convertedNoteData);
+	//console.log(convertedNoteData);
 	return convertedNoteData;
 	
 }

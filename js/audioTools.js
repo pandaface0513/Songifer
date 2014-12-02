@@ -15,12 +15,13 @@ function dynamicMusic(notes){
         o = new Object();
         o.measure = measure;
         o.start = start/16;
-        o.duration = 1/16;
+        o.duration = notes[i].length/8;
         o.tone = note;
+        console.log(o);
         //insert into the music sheet
         musicSheet.push(o);
-        start++;
-        if(start > 16){start = 1;}
+        start += 4;
+        if(start > 16){start = 1; measure++;}
     }
     
     return musicSheet;
