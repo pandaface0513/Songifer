@@ -30,16 +30,29 @@ function dynamicMusic(notes){
 function playMusic(lead, gain){
   //var bass = synthastico.createSynth(audioContext, notesBass);
 
-  lead.decay = 30*(synthastico.SAMPLERATE / 1000);
+
+  lead.decay = 60*(synthastico.SAMPLERATE / 1000);
   lead.sustain = 0.5;
   lead.release = 30*(synthastico.SAMPLERATE / 1000);
 
+  var val = 0;
+
   lead.sound = function (note, time) {
     // Create a "period" based on the note's semitone.
-    var val =
-      synthastico.BASE_FREQUENCY *
-      Math.pow(2, (note.tone - (synthastico.OCTAVE_LENGTH*(synthastico.BASE_OCTAVE + 1))) / synthastico.OCTAVE_LENGTH) *
-      (time / synthastico.SAMPLERATE);
+
+    // *** original method ***
+    // var val =
+    //   synthastico.BASE_FREQUENCY *
+    //   Math.pow(2, (note.tone - (synthastico.OCTAVE_LENGTH*(synthastico.BASE_OCTAVE + 1))) / synthastico.OCTAVE_LENGTH) *
+    //   (time / synthastico.SAMPLERATE);
+
+    // *** test method 1 ***
+    // var val = Math.sin(synthastico.BASE_FREQUENCY * note.tone * Math.pow(2, (note.tone - (synthastico.OCTAVE_LENGTH*(synthastico.BASE_OCTAVE + 1))) / synthastico.OCTAVE_LENGTH) * 2 * Math.PI * (1 - (time / synthastico.SAMPLERATE)));
+    
+    // *** test method 2 ***
+    // inspired by http://www.keithwhor.com/music/
+    val = Math.sin( (2 * Math.PI) * (time / synthastico.SAMPLERATE) * 
+        (synthastico.BASE_FREQUENCY * Math.pow(2, (note.tone ) / synthastico.OCTAVE_LENGTH)));
 
     // console.log(val);
 
@@ -54,8 +67,7 @@ function playMusic(lead, gain){
     );
 
     // Now apply the periodic function.
-    var value =
-      (val - Math.floor(val) - 0.5) * 1 * amp;
+    var value = (val - Math.floor(val) - 0.5) * 1 * amp;
 
     return value;
   };
@@ -68,18 +80,11 @@ function playMusic(lead, gain){
     //   return effect;
     // }());
 
-    // var highpass = (function () {
-    //   var effect = context.createBiquadFilter();
-    //   effect.type = 'highpass';
-    //   effect.frequency.value = 100;
-    //   return effect;
-    // }());
-
-    var lowshelf = (function () {
+    var highpass = (function () {
       var effect = context.createBiquadFilter();
-      effect.type = 'lowshelf';
-      effect.frequency.value = 200;
-      effect.gain.value = 100;
+      effect.type = 'highpass';
+      effect.frequency.value = 75;
+      effect.Q.value = 10;
       return effect;
     }());
 
@@ -90,6 +95,19 @@ function playMusic(lead, gain){
       effect.gain.value = -50;
       return effect;
     }());
+    
+    // Initiate an object from the Tuna audio effects library.
+    // https://github.com/Dinahmoe/tuna
+    var tuna = new Tuna(context);
+
+    var chorus = new tuna.Chorus({
+                 rate: 1,        //0.01 to 8+
+                 feedback: 0.2,  //0 to 1+
+                 delay: 0.1,     //0 to 1
+                 bypass: 0       //the value 1 starts the effect as bypassed, 0 or 1
+    });
+
+  
 
   // *** begin original code ***
   // lead.connect(lowpass);
@@ -104,9 +122,10 @@ function playMusic(lead, gain){
   // gain.connect(context.destination);
   // *** end original code ***
 
-  lead.connect(lowshelf);
-  lead.connect(highshelf);
+  lead.connect(highpass);
+  highpass.connect(highshelf);
   highshelf.connect(gain);
-  gain.connect(context.destination);
+  gain.connect(chorus.input);
+  chorus.connect(context.destination);
 
 }
