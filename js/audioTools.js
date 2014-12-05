@@ -60,19 +60,53 @@ function playMusic(lead, gain){
     return value;
   };
     
-    var lowpass = (function () {
+    // var lowpass = (function () {
+    //   var effect = context.createBiquadFilter();
+    //   effect.type = 'lowpass';
+    //   effect.frequency.value = 1000;
+    //   effect.gain.value = 0;
+    //   return effect;
+    // }());
+
+    // var highpass = (function () {
+    //   var effect = context.createBiquadFilter();
+    //   effect.type = 'highpass';
+    //   effect.frequency.value = 100;
+    //   return effect;
+    // }());
+
+    var lowshelf = (function () {
       var effect = context.createBiquadFilter();
-      effect.type = 'lowpass';
-      effect.frequency.value = 1000;
-      effect.gain.value = 0;
+      effect.type = 'lowshelf';
+      effect.frequency.value = 200;
+      effect.gain.value = 100;
       return effect;
     }());
 
-  lead.connect(lowpass);
+    var highshelf = (function () {
+      var effect = context.createBiquadFilter();
+      effect.type = 'highshelf';
+      effect.frequency.value = 1500;
+      effect.gain.value = -50;
+      return effect;
+    }());
+
+  // *** begin original code ***
+  // lead.connect(lowpass);
+
   //lead.connect(reverb);
   // bass.connect(audioContext.destination);
   // lowpass.connect(sidechain);
   // lead.connect(audioContext.destination);
-  lowpass.connect(gain);
+  
+
+  // lowpass.connect(gain);
+  // gain.connect(context.destination);
+  // *** end original code ***
+
+  lead.connect(lowshelf);
+  lead.connect(highshelf);
+  highshelf.connect(gain);
   gain.connect(context.destination);
+
 }
