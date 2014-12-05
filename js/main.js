@@ -61,7 +61,6 @@ function gotStream(stream){
     //mediaStreamSource.connect(context.destination);
     startVisualizer();  // after we get the mic stream, start the visualizer 
     initPitch();
-    initOscillator();
 }
 
 var HelloWorld = function(){
