@@ -20,7 +20,7 @@ function dynamicMusic(notes){
         console.log(o);
         //insert into the music sheet
         musicSheet.push(o);
-        start += 4;
+        start += lockedTempoValue;
         if(start > 16){start = 1; measure++;}
     }
     

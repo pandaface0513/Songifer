@@ -20,12 +20,19 @@ var raw_data = [];  // store the raw audio stream data from the mic input
 
 var recorder;
 
+var GUI;
+var controls;
+
+var lockedTempoValue = 4;
+
 window.onload = function(){
-    var text = new HelloWorld();
-    var GUI = new dat.GUI();
-    GUI.add(text, 'title')
-    GUI.add(text, 'record');
-    GUI.add(text, 'export');
+    controls = new HelloWorld();
+    GUI = new dat.GUI();
+    GUI.add(controls, 'title');
+    GUI.add(controls, 'recordingTimeGUI', 5, 30).step(5).name("record time (sec)");
+    GUI.add(controls, 'tempo', 1, 7).step(1).name("tempo modifier");
+    GUI.add(controls, 'record');
+    GUI.add(controls, 'export');
     
     
     navigator.getUserMedia = ( navigator.getUserMedia ||
@@ -70,15 +77,24 @@ function gotStream(stream){
 var HelloWorld = function(){
     this.title = "Songify MK2014";  // display title of our app
 
+    this.tempo = 4;
+    this.recordingTimeGUI = 10;
+
     // to begin recording audio from mic
     this.record = function(){
         //start our recording
         if(!isRecording && allowRecording){   //if not recording
             isRecording = true;
             allowRecording = false;
+            recordTime = 0;
+            recordTime = this.recordingTimeGUI * 1000;
             timeRemaining = recordTime / 1000;
+
+            console.log(document.getElementsByClassName("dg main a"));
+
             startRecording();
             setTimeout(stopRecording, recordTime+1000);  // execute stopRecording() once time runs out
+            lockedTempoValue = 8 - this.tempo;
         }
     },
 
