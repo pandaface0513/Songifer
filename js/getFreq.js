@@ -50,12 +50,6 @@ function stopRecording(){
 
 //function loop to keep detecting and recording frequency
 function recordFreq(){
-    var s = [];
-    
-    for(var i=0; i<data.length; i++){
-        s.push(str[i]);
-    }
-    
     // copy samples to the internal buffer
     pitch.input(data);
 
