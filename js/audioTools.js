@@ -28,6 +28,7 @@ function dynamicMusic(notes){
 }
 
 function playMusic(lead, gain){
+
   //var bass = synthastico.createSynth(audioContext, notesBass);
 
 
@@ -127,5 +128,13 @@ function playMusic(lead, gain){
   highshelf.connect(gain);
   gain.connect(chorus.input);
   chorus.connect(context.destination);
+    
+  recorder = new Recorder(mediaStreamSource, {workerPath: "vendor/recorder.js/recorderWorker.js"});
+  recorder && recorder.record();
+
+  // *** NOT WORKING ***
+  // mediaStreamSource = context.createMediaStreamSource(context);
+  // mediaStreamSource.connect(context.destination);
+
 
 }

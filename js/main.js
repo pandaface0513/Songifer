@@ -10,6 +10,8 @@ var recordTime = 10000;
 
 var raw_data = [];
 
+var recorder;
+
 window.onload = function(){
     var text = new HelloWorld();
     var GUI = new dat.GUI();
@@ -20,6 +22,8 @@ window.onload = function(){
     //GUI.add(text, 'AmpifyRatio', 0.1, 3);
     //GUI.add(text, "Secret");
     GUI.add(text, 'record');
+    GUI.add(text, 'export');
+
     
     //initialize audioContext
         
@@ -56,7 +60,7 @@ window.onload = function(){
 //connect the microphone
 function gotStream(stream){
     mediaStreamSource = context.createMediaStreamSource(stream);
-    
+
     //connect it to the destination.
     //mediaStreamSource.connect(context.destination);
     startVisualizer();  // after we get the mic stream, start the visualizer 
@@ -77,7 +81,27 @@ var HelloWorld = function(){
             timeRemaining = recordTime / 1000;
             startRecording();
             setTimeout(stopRecording, recordTime+1000);
+
         }
+    },
+    this.export = function() {
+        recorder && recorder.stop();
+
+        recorder && recorder.exportWAV(function(blob) {
+          var url = URL.createObjectURL(blob);
+          var li = document.createElement('li');
+          var au = document.createElement('audio');
+          var hf = document.createElement('a');
+          
+          au.controls = true;
+          au.src = url;
+          hf.href = url;
+          hf.download = new Date().toISOString() + '.wav';
+          hf.innerHTML = hf.download;
+          li.appendChild(au);
+          li.appendChild(hf);
+          recordingslist.appendChild(li);
+        });
     }
 }
 
@@ -106,6 +130,11 @@ function postRecording(){
     //update status
     updateStatus("Playing some creepy music...");
     playMusic(lead, gain);
+
+    
+
+
+
 }
 
 /*
