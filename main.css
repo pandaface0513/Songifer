@@ -1,5 +1,6 @@
 html {
     height: 100%;
+    padding: 10px;
 }
 
 body {
@@ -18,4 +19,21 @@ h2 {
 
 h3 {
     color: #DDD;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#recordingslist audio {
+    display: block;
+    margin-bottom: 10px;
+}
+
+ul#recordingslist li a {
+    list-style: none;
+    color: #FFF;
+    font-weight: bold;
 }

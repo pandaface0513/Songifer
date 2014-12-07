@@ -1,5 +1,10 @@
-/*-- The Script will handle grouping of the frequency --*/
+/*-- The Script will handle grouping of the frequency -- */
 
+/*
+ *  Groups the initial set of raw input audio data into an object. That is, when frequency data
+ *  appears more than once, combine them and add a length attribute to note the number of
+ *  consecutive occurrances.
+ */
 function grouping(raw){
     //update the status
     updateStatus("Organizing Raw Data...")
@@ -29,6 +34,11 @@ function grouping(raw){
     return group_data;
 }
 
+/*
+ *  Re-group the data, this time taking in an array of notes instead of raw frequency data.
+ *  This step is necessary because after mapping to notes, we need to check for reoccurring
+ *  frequency data once again.
+ */
 function groupingAgain(notes){
     //update the status
     updateStatus("Organizing Notes...");

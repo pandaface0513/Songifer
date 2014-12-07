@@ -1,14 +1,22 @@
+/*
+ *  This is the first script that is loaded in our application. It initializes items such as
+ *  the context and the GUI, and makes calls to other, more specific scripts/functions.
+ */
+
+// initialize the audio context
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
+var context = new AudioContext();
 
-context = new AudioContext();
+// used for storing a MediaStreamAudioSourceNode object given a media stream
+var mediaStreamSource;
 
-var context, mediaStreamSource, musicPlayer;
+var isRecording = false;    // check if app is currently recording something
+var allowRecording = true;  // check if user has clicked the record button
 
-var isRecording = false;
-var timeRemaining = 0;
-var recordTime = 10000;
+var recordTime = 10000;  // amount of time for the user to record a clip, in milliseconds
+var timeRemaining = 0;   // amount of time remaining for the user to record
 
-var raw_data = [];
+var raw_data = [];  // store the raw audio stream data from the mic input
 
 var recorder;
 
@@ -16,17 +24,10 @@ window.onload = function(){
     var text = new HelloWorld();
     var GUI = new dat.GUI();
     GUI.add(text, 'title')
-    //GUI.add(text, 'NoiseCancel')
-    //GUI.add(text, 'NoiseSensitivity', 1, 10);
-    //GUI.add(text, 'Amplifier');
-    //GUI.add(text, 'AmpifyRatio', 0.1, 3);
-    //GUI.add(text, "Secret");
     GUI.add(text, 'record');
     GUI.add(text, 'export');
-
     
-    //initialize audioContext
-        
+    
     navigator.getUserMedia = ( navigator.getUserMedia ||
                        navigator.webkitGetUserMedia ||
                        navigator.mozGetUserMedia ||
@@ -34,77 +35,80 @@ window.onload = function(){
     
     if(navigator.getUserMedia){
         navigator.getUserMedia(
-            
-            //constraints
+            // constraints to enable audio (with no video)
             {
                 audio: true
             },
             
-            //successCallback
+            // successCallback
             function(stream){
                 console.log("got stream");
                 gotStream(stream);
             },
             
-            //errorCAllback
+            // errorCallback
             function(err){
                 console.log("The following error occured: " + err);
             }
         );
-    }else{
+    }
+    else{
         console.log("getUserMedia not supported");
     }
 }
-
 
 //connect the microphone
 function gotStream(stream){
     mediaStreamSource = context.createMediaStreamSource(stream);
 
     //connect it to the destination.
-    //mediaStreamSource.connect(context.destination);
     startVisualizer();  // after we get the mic stream, start the visualizer 
-    initPitch();
+    initPitch();  // get the pitch
 }
 
+// Set up the dat.gui controls, and the triggers for when the corresponding button is clicked.
 var HelloWorld = function(){
-    this.title = "Songify MK2014";
-    this.NoiseCancel = true;
-    this.NoiseSensitivity = 5;
-    this.Amplifier = true;
-    this.AmpifyRatio = 1;
-    this.Secret = true;
+    this.title = "Songify MK2014";  // display title of our app
+
+    // to begin recording audio from mic
     this.record = function(){
         //start our recording
-        if(!isRecording){   //if not recording
+        if(!isRecording && allowRecording){   //if not recording
             isRecording = true;
+            allowRecording = false;
             timeRemaining = recordTime / 1000;
             startRecording();
-            setTimeout(stopRecording, recordTime+1000);
+            setTimeout(stopRecording, recordTime+1000);  // execute stopRecording() once time runs out
         }
     },
-    this.export = function() {
-        recorder && recorder.stop();
 
+    // export audio to WAV file
+    this.export = function() {
+        recorder && recorder.stop();  // stop recording once the button is cliecked
+
+        // Export to WAV file. Create a download link to an HTML list element on the left side
+        // of the page. This function's code was borrowed from an example given by the
+        // recorder.js library.
         recorder && recorder.exportWAV(function(blob) {
-          var url = URL.createObjectURL(blob);
-          var li = document.createElement('li');
-          var au = document.createElement('audio');
-          var hf = document.createElement('a');
-          
-          au.controls = true;
-          au.src = url;
-          hf.href = url;
-          hf.download = new Date().toISOString() + '.wav';
-          hf.innerHTML = hf.download;
-          li.appendChild(au);
-          li.appendChild(hf);
-          recordingslist.appendChild(li);
+            var url = URL.createObjectURL(blob);
+            var li = document.createElement('li');
+            var au = document.createElement('audio');
+            var hf = document.createElement('a');
+
+            au.controls = false;
+            au.src = url;
+            hf.href = url;
+            hf.download = new Date().toISOString() + '.wav';
+            hf.innerHTML = "Download: " + hf.download;
+            li.appendChild(au);
+            li.appendChild(hf);
+            recordingslist.appendChild(li);
         });
+        // *** end sample code from recorder.js library ***
     }
 }
 
-//function for displaying status
+//function for displaying status messages
 function updateStatus(status){
     document.getElementById("status").innerHTML += status + "<br>";
 }
@@ -113,42 +117,21 @@ function updateStatus(status){
 function postRecording(){
     //step one - group the data
     group_data = grouping(raw_data);
+
     //step two - convert to notes
     note_data = convertNote(group_data);
+
     //step three - regrouping the notes
     group_note = groupingAgain(note_data);
-    console.log(group_note);
+
     //step four - create music sheet
     notesLead = [];
     notesLead = dynamicMusic(group_note);
-    console.log(notesLead);
+
     //step five - play music
     var gain = context.createGain();
-    gain.gain.value = 5;
+    gain.gain.value = 5;  // set the audio gain
     var lead = synthastico.createSynth(context, notesLead);
-    //update status
-    updateStatus("Playing some creepy music...");
+    updateStatus("Playing some creepy music...");  //update status
     playMusic(lead, gain);
-
-    
-
-
-
 }
-
-/*
-function getNote(frequency, reference) {
-    if (!frequency) return null;
-    reference = reference || 440;
-    return 69 + 12 * Math.log(frequency / reference) / Math.LN2;
-}
-
-function getAngle(midiNote) {
-    return midiNote ? Math.PI * (midiNote % 12) / 6 : 0;
-}
-
-function getOctave (midiNote) {
-    return ~~(midiNote / 12);
-}
-*/
-

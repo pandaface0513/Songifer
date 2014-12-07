@@ -1,9 +1,14 @@
 /*
- * An array that lists the notes of a piano and their frequencies.
- * Values are based on https://en.wikipedia.org/wiki/Piano_key_frequencies
- * Frequency values are rounded down to the nearest integer.
- * Upper cutoff: C6 Soprano (64)
- * Lower cutoff: C# (5)
+ *  In this script, we convert our raw audio data into notes based on frequencies, similar to
+ *  piano keys.
+ */
+
+/*
+ *  An array that corresponds to the notes of a piano and their frequencies.
+ *  Values are based on https://en.wikipedia.org/wiki/Piano_key_frequencies
+ *  Frequency values are rounded down to the nearest integer for simplicity.
+ *  Lower cutoff: C# (5)
+ *  Upper cutoff: C6 Soprano (64)
  */
 var mappingArray = [
 	{note: 5,  freq: 34 }, {note: 6,  freq: 36 }, {note: 7,  freq: 38 }, {note: 8,  freq: 41 },
@@ -23,9 +28,16 @@ var mappingArray = [
 	{note: 61, freq: 880}, {note: 62, freq: 932}, {note: 63, freq: 987}, {note: 64, freq: 1046}
 ];
 
+// frequencies that fall below this bound will be treated as silent ("note 0")
 var LOWER_FREQ_BOUNDS = 27;
+
+// frequencies that fall above this bound will be capped at note 64
 var UPPER_FREQ_BOUNDS = 4186;
 
+/*
+ *  Convert the input array of grouped frequency data objects (frequency and length) to notes.
+ *  Return an array of objects containing note values and their length.
+ */
 function convertNote(noteArray) {
 	updateStatus("Converting Notes...");
 
@@ -39,68 +51,42 @@ function convertNote(noteArray) {
         convertedNoteData.push(o);
 	}
 
-	//console.log(convertedNoteData);
-	return convertedNoteData;
-	
+	return convertedNoteData;	
 }
 
-function convertNoteA(noteArray) {
-	updateStatus("Converting Notes...");
-
-	var convertedNoteData = [];
-
-	for (var i = 0, len = noteArray.length; i < len; i++) {
-		var note = mapValues(noteArray[i]);
-        var o = new Object();
-        o.note = note;
-        convertedNoteData.push(o);
-	}
-
-	//console.log(convertedNoteData);
-	return convertedNoteData;
-	
-}
-
-/**
- * Takes in a frequency value. Convert to the piano key value.
+/*
+ *  Takes in a frequency value. Convert to the piano key value.
  */
 function mapValues(inputValue) {
-	/*
-	 * Values are rounded down for simplicity.
-	 * Upper cutoff: high c (64)
-	 * Lower cutoff: C# (5)
-	 */
-	// console.log(mappingArray);
-
-	// CHANGE TO BINARY SEARCH?
 	var i = 0;
 	var continueLoop = true;
-	var keyNumber = 0;
+	var noteNumber = 0;
 
+	// frequencies that fall below this bound will be treated as silent
+	if (inputValue <= LOWER_FREQ_BOUNDS) {
+		// note 0 doesn't exist, but we use as a dummy value to indicate zero frequency
+		noteNumber = 0;
+		continueLoop = false;
+	}
+
+	// frequencies that fall above this bound will be capped as note 64
+	else if (inputValue > UPPER_FREQ_BOUNDS) {
+		noteNumber = 64;
+		continueLoop = false;
+	}
+
+	// otherwise, cycle through the mapping array above to determine which note to map to
 	while (i < (mappingArray.length - 1) && continueLoop == true) {
-
-		if (inputValue <= LOWER_FREQ_BOUNDS) {
-			// console.log("input value " + inputValue + " is less than min");
-			keyNumber = 0;
+		// if found
+		if (inputValue >= mappingArray[i].freq && inputValue < mappingArray[i+1].freq) {
+			noteNumber = mappingArray[i].note;  // map to the corresponding note
 			continueLoop = false;
 		}
-		else if (inputValue > UPPER_FREQ_BOUNDS) {
-			// console.log("input value " + inputValue + " is more than max");
-			keyNumber = 64;
-			continueLoop = false;
-		}
-		else {
-			if (inputValue >= mappingArray[i].freq && inputValue < mappingArray[i+1].freq) {
-				// console.log("input value " + inputValue + " mapped to note " + mappingArray[i].note);
-				keyNumber = mappingArray[i].note;
-				continueLoop = false;
-			}
-			else {
-				i++;
-			}
+		else {  // continue looping
+			i++;
 		}
 
 	}
 
-	return keyNumber;
+	return noteNumber;
 }

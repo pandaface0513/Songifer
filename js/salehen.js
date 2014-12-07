@@ -1,3 +1,7 @@
+/*
+ *  Same content as audio.js from Workshop 7.
+ */
+ 
 (function () {
   var BASE_FREQUENCY = 440;
   var OCTAVE_LENGTH = 12;

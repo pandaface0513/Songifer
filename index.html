@@ -1,39 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="main.css">
-
-      <style type='text/css'>
-    ul { list-style: none; }
-    #recordingslist audio { display: block; margin-bottom: 10px; }
-  </style>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <title>Songifier</title>
 </head>
 <body>
+    <!-- load 3rd-party libraries -->
     <script src="vendor/fft.js/lib/complex.js"></script>
     <script src="vendor/pitch.js/src/pitch.js"></script>
     <script src="vendor/lib/dat.gui.min.js"></script>
     <script src="vendor/recorder.js/recorder.js"></script>
     <script src="vendor/recorder.js/recorderWorker.js"></script>
+    <script src="vendor/tuna.js/tuna.js"></script>
 
+    <!-- load our main program script -->
     <script src="js/main.js"></script>
     
+    <!-- text to display operation messages -->
     <h1 id="status"></h1>
     <h2 id="sub"></h2>
     <h3 id="subsub"></h3>
 
+    <!-- generated download links -->
     <ul id="recordingslist"></ul>
     
+    <!-- visualization -->
     <canvas id="canvas" width="800" height="600"></canvas>
+
+    <!-- load more program scripts -->
     <script src="js/visualizer.js"></script>
-    
     <script src="js/getFreq.js"></script>
     <script src="js/grouping.js"></script>
     <script src="js/noteConversion.js"></script>
-    
     <script src="js/salehen.js"></script>
     <script src="js/audioTools.js"></script>
-    <script src="js/lib/tuna.js"></script>
-
-
 </body>
 </html>

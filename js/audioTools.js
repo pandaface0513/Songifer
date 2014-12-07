@@ -137,8 +137,8 @@ function playMusic(lead, gain){
   highshelf.connect(gain);
   gain.connect(phaser.input);
   phaser.connect(chorus.input);
-  chorus.connect(context.destination)
-    
+  chorus.connect(context.destination);
+  
   recorder = new Recorder(chorus.output, {workerPath: "vendor/recorder.js/recorderWorker.js"});
   recorder && recorder.record();
 

@@ -1,8 +1,10 @@
+/*
+ *  Contains functions that handle recording audio, as well as getting frequency and pitch data.
+ */
+
 var pitch, tone, str;
 
 var recordThread, countThread;
-
-var s = [];
 
 //function to get pitch
 function initPitch(){
@@ -48,7 +50,7 @@ function stopRecording(){
 
 //function loop to keep detecting and recording frequency
 function recordFreq(){
-    s = [];
+    var s = [];
     
     for(var i=0; i<data.length; i++){
         s.push(str[i]);
