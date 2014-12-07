@@ -84,7 +84,7 @@ function playMusic(lead, gain){
     var highpass = (function () {
       var effect = context.createBiquadFilter();
       effect.type = 'highpass';
-      effect.frequency.value = 75;
+      effect.frequency.value = 50;
       effect.Q.value = 10;
       return effect;
     }());
@@ -92,7 +92,7 @@ function playMusic(lead, gain){
     var highshelf = (function () {
       var effect = context.createBiquadFilter();
       effect.type = 'highshelf';
-      effect.frequency.value = 1500;
+      effect.frequency.value = 2500;
       effect.gain.value = -50;
       return effect;
     }());
@@ -100,11 +100,20 @@ function playMusic(lead, gain){
     // Initiate an object from the Tuna audio effects library.
     // https://github.com/Dinahmoe/tuna
     var tuna = new Tuna(context);
-
+    
+    var phaser = new tuna.Phaser({
+        rate: 1.2,
+        depth: 0.3,
+        feedback: 0.2,
+        stereoPhase: 30,
+        baseModulationFrequency: 700,
+        bypass: 0
+    });
+    
     var chorus = new tuna.Chorus({
-                 rate: 1,        //0.01 to 8+
+                 rate: 1.5,        //0.01 to 8+
                  feedback: 0.2,  //0 to 1+
-                 delay: 0.1,     //0 to 1
+                 delay: 0.0045,     //0 to 1
                  bypass: 0       //the value 1 starts the effect as bypassed, 0 or 1
     });
 
@@ -126,10 +135,11 @@ function playMusic(lead, gain){
   lead.connect(highpass);
   highpass.connect(highshelf);
   highshelf.connect(gain);
-  gain.connect(chorus.input);
-  chorus.connect(context.destination);
+  gain.connect(phaser.input);
+  phaser.connect(chorus.input);
+  chorus.connect(context.destination)
     
-  recorder = new Recorder(mediaStreamSource, {workerPath: "vendor/recorder.js/recorderWorker.js"});
+  recorder = new Recorder(chorus.output, {workerPath: "vendor/recorder.js/recorderWorker.js"});
   recorder && recorder.record();
 
   // *** NOT WORKING ***

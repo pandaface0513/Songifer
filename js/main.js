@@ -81,7 +81,6 @@ var HelloWorld = function(){
             timeRemaining = recordTime / 1000;
             startRecording();
             setTimeout(stopRecording, recordTime+1000);
-
         }
     },
     this.export = function() {
@@ -125,7 +124,7 @@ function postRecording(){
     console.log(notesLead);
     //step five - play music
     var gain = context.createGain();
-    gain.gain.value = 10;
+    gain.gain.value = 5;
     var lead = synthastico.createSynth(context, notesLead);
     //update status
     updateStatus("Playing some creepy music...");
