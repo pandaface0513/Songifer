@@ -1,4 +1,4 @@
-/*-- The Script will handle grouping of the frequency -- */
+/*-- The script will handle grouping of the frequency -- */
 
 /*
  *  Groups the initial set of raw input audio data into an object. That is, when frequency data

@@ -20,7 +20,9 @@ var raw_data = [];  // store the raw audio stream data from the mic input
 
 var recorder;
 
-// this value, from the slider, is the tempo modifier that is saved when "record" is clicked
+// This value, from the slider, is the "tempo modifier" that is saved when "record" is clicked
+// interval between the note. The value makes notes closer together or further away.
+// The bigger the number, the higher the speed.
 var lockedTempoValue = 4;
 
 // dat.GUI objects
@@ -33,7 +35,7 @@ window.onload = function(){
     GUI.add(controls, 'title');
     GUI.add(controls, 'recordingTimeGUI', 5, 30).step(5).name("record time (sec)");
     GUI.add(controls, 'tempo', 1, 7).step(1).name("tempo modifier");
-    GUI.add(controls, 'record');
+    GUI.add(controls, 'record').name("record");
     GUI.add(controls, 'export').name("export to WAV file");
     
     

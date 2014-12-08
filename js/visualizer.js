@@ -1,3 +1,8 @@
+/*
+ *  Code to display the graphical visualizer and the FFT analyzer.
+ *  This is a somewhat modified version of the Workshop 6's main-rainbow.js code.
+ */
+
 var canvas = document.getElementById('canvas');
 canvasContext = canvas.getContext('2d');
 
@@ -91,13 +96,13 @@ function animate() {
   }
 }
 
-// start the visualizer once we receive the data
+// Start the visualizer once we receive the data. Initialize the FFT analyzer.
+// This is vital to the rest of our application.
 function startVisualizer() {
-  fft = context.createAnalyser();
+  fft = context.createAnalyser();  
   fft.fftSize = SAMPLE_SIZE;
 
-  mediaStreamSource.connect(fft);
+  mediaStreamSource.connect(fft);  // connect an FFT analyzer to the audio context
 
-  //fft.connect(context.destination);
   animate();
 }

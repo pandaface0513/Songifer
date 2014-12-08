@@ -105,7 +105,7 @@ function playMusic(lead, gain){
         bypass: 0        // the value 1 starts the effect as bypassed, 0 or 1
     });
 
-    // connect the sources up to the effects
+    // connect the effects to the audio sources
     lead.connect(highpass);
     highpass.connect(highshelf);
     highshelf.connect(gain);

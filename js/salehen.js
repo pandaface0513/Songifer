@@ -1,4 +1,5 @@
 /*
+ *  It outputs music tones according to the input json (referred as music sheet in our code).
  *  Same content as audio.js from Workshop 7.
  */
  
