@@ -40,6 +40,19 @@ We didn’t implement user-manageable clips because it doesn’t fit as well wit
 
 
 
+
+## Instructions for Using Our Application
+   1. Adjust the record time (second) and the tempo modifier beforehand.
+   2. Click the “record” button to start recording
+   3. Speak freely into the microphone, vary the length for better results
+   4. When the predetermined time is passed, the resulted tone will be play
+   5. Let the tone play for the amount of time you wish to export, then click the “export” button.
+   6. A download link will appear for you to download the resulted tone as a .wav file.
+
+
+
+
+
 ## Technical Details
 # Step 1: Getting the Data
 * We have one type of input, which is from the user's microphone
@@ -119,15 +132,3 @@ Once recording is complete, do post-processing.
    * noteConversion.js: Convert raw audio data into notes based on frequencies, similar to piano keys.
    * salehen.js: Exactly the same as audio.js from Workshop 7. It outputs music tones according to the input json (referred as music sheet in our code)
    * visualizer.js: Code to display the graphical visualizer and the FFT analyzer. This is a somewhat modified version of the Workshop 6's main-rainbow.js code.
-
-
-
-
-
-## Instructions for Using Our Application
-   1. Adjust the record time (second) and the tempo modifier beforehand.
-   2. Click the “record” button to start recording
-   3. Speak freely into the microphone, vary the length for better results
-   4. When the predetermined time is passed, the resulted tone will be play
-   5. Let the tone play for the amount of time you wish to export, then click the “export” button.
-   6. A download link will appear for you to download the resulted tone as a .wav file.
