@@ -20,10 +20,12 @@ var raw_data = [];  // store the raw audio stream data from the mic input
 
 var recorder;
 
+// this value, from the slider, is the tempo modifier that is saved when "record" is clicked
+var lockedTempoValue = 4;
+
+// dat.GUI objects
 var GUI;
 var controls;
-
-var lockedTempoValue = 4;
 
 window.onload = function(){
     controls = new HelloWorld();
@@ -32,7 +34,7 @@ window.onload = function(){
     GUI.add(controls, 'recordingTimeGUI', 5, 30).step(5).name("record time (sec)");
     GUI.add(controls, 'tempo', 1, 7).step(1).name("tempo modifier");
     GUI.add(controls, 'record');
-    GUI.add(controls, 'export');
+    GUI.add(controls, 'export').name("export to WAV file");
     
     
     navigator.getUserMedia = ( navigator.getUserMedia ||
@@ -90,10 +92,10 @@ var HelloWorld = function(){
             recordTime = this.recordingTimeGUI * 1000;
             timeRemaining = recordTime / 1000;
 
-            console.log(document.getElementsByClassName("dg main a"));
-
             startRecording();
             setTimeout(stopRecording, recordTime+1000);  // execute stopRecording() once time runs out
+            
+            // use tempo slider's maximum value + 1 because we must avoid dividing by zero
             lockedTempoValue = 8 - this.tempo;
         }
     },
